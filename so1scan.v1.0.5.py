@@ -7,10 +7,10 @@ def main():
     global args
     try:
         parser = argparse.ArgumentParser()
-        parser.add_argument('-d', '--domain', required=True)
-        parser.add_argument('-f', '--file_type', choices=['json', 'txt'])
-        parser.add_argument('-n', '--name')
-        parser.add_argument('-q', '--quiet', action='store_true')
+        parser.add_argument('-d', '--domain', required=True, help='the domain you want to query')
+        parser.add_argument('-f', '--file_type', choices=['json', 'txt'], help='file type of the output file')
+        parser.add_argument('-n', '--name', help='location & file name of the file (results.txt or ~/Documents/proton.json)')
+        parser.add_argument('-q', '--quiet', action='store_true', help='when enabled suppresses all terminal output ')
         args = parser.parse_args()
         url = str(args.domain)
         domain = urlparse(url).netloc
@@ -21,7 +21,7 @@ def main():
             return
 
         init()
-        client = vt.Client('API KEY') #vt api needed
+        client = vt.Client('help') #vt api needed
 
         if args.quiet:
             sys.stdout = open(os.devnull, 'w')
