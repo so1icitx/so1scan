@@ -4,7 +4,7 @@ import dns.resolver
 from colorama import Fore, init
 
 def main():
-    global args
+
     try:
         parser = argparse.ArgumentParser()
         parser.add_argument('-d', '--domain', required=True, help='the domain you want to query')
@@ -58,8 +58,8 @@ def main():
                 data = f'Querying {url}\nIP address of {domain}: {ip}\nMALICIOUS {url_vt.last_analysis_stats['malicious']}/{count} vendors\nServer: {r.headers.get('Server')}'
                 with open(args.name, 'a') as f:
                     f.write(data)
-        http_headers(r)
-        who_is(domain)
+        http_headers(r, args)
+        who_is(domain, args)
         client.close()
 
 
@@ -77,7 +77,7 @@ def main():
 
 
 
-def http_headers(response):
+def http_headers(response, args):
     print(f'\nHTTP SECURITY HEADERS')
     csp = response.headers.get('Content-Security-Policy')
     if csp == None :
@@ -158,7 +158,7 @@ def http_headers(response):
 
 
 
-def who_is(domain):
+def who_is(domain, args):
     w = whois.whois(domain)
     print(f'\n{Fore.WHITE}WHOIS LOOKUP{Fore.CYAN}')
     print(f'Registrar: {w.registrar}')
